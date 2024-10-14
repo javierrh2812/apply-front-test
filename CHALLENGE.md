@@ -32,12 +32,12 @@ The "See more" functionality should be implemented using the “page” URL para
 
 - The page must have a loading indicator.
 - The selected "genre" filter should persist on the url and be used when querying the results if the page is visited for the first time using these parameters.
-- When clicking on the "Add To Cart" button, the game has to be added to the Cart.
+- When clicking on the "Add To Page" button, the game has to be added to the Page.
 - If the item is added to cart, the button should say "Remove" and if clicked it should remove the item from the cart.
 - ¨See more¨ button must be implemented.
 - The "genre" filter selector can be implemented using the native select element. It doesn’t need to be complex.
 
-### Cart Page
+### Page Page
 
 - It should display every item added to the cart, including `name`, `description`, `price`, `image`, `genre`, and display the "New" label using the `isNew` attribute.
 - The "X" button on each item should remove it from the cart.
