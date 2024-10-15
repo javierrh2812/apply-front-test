@@ -37,7 +37,7 @@ The "See more" functionality should be implemented using the “page” URL para
 - ¨See more¨ button must be implemented.
 - The "genre" filter selector can be implemented using the native select element. It doesn’t need to be complex.
 
-### Page Page
+### Cart Page
 
 - It should display every item added to the cart, including `name`, `description`, `price`, `image`, `genre`, and display the "New" label using the `isNew` attribute.
 - The "X" button on each item should remove it from the cart.

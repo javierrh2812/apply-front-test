@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from "react";
+"use client"
+import {createContext, useContext, useEffect, useState} from "react";
 
-export type Product = any;
+export type Product = {id: number, genre: string, name: string, price: number, isNew?: boolean, description: string, image: string};
 export type Item = {product: Product, qty: number}
 
 interface CartContextValue {
@@ -32,6 +33,18 @@ interface Props {
 export const CartProvider = ({ children }: Props) => {
     const [cartItems, setCartItems] = useState<Item[]>([]);
 
+    useEffect(()=>{
+       const cartFromLocalStorage = localStorage.getItem("cartItems");
+       if (cartFromLocalStorage) {
+           setCartItems(JSON.parse(cartFromLocalStorage))
+       }
+    }, [])
+
+    const updateCart = (cartItems: any) => {
+       localStorage.setItem("cartItems", JSON.stringify(cartItems))
+        setCartItems(cartItems);
+    }
+
     const addToCart = (product: Product) => {
         const existingCartItemIndex = cartItems.findIndex(
             (item) => item.product.id === product.id
@@ -44,9 +57,9 @@ export const CartProvider = ({ children }: Props) => {
             };
             const updatedCartItems = [...cartItems];
             updatedCartItems[existingCartItemIndex] = updatedCartItem;
-            setCartItems(updatedCartItems);
+            updateCart(updatedCartItems);
         } else {
-            setCartItems([...cartItems, { product, qty: 1 }]);
+            updateCart([...cartItems, { product, qty: 1 }]);
         }
     };
 
@@ -54,7 +67,7 @@ export const CartProvider = ({ children }: Props) => {
         const updatedCartItems = cartItems.filter(
             (item) => item.product.id !== productId
         );
-        setCartItems(updatedCartItems);
+        updateCart(updatedCartItems);
     };
 
     const updateCartItemQuantity = (productId: number, quantity: number) => {
@@ -69,7 +82,7 @@ export const CartProvider = ({ children }: Props) => {
             };
             const updatedCartItems = [...cartItems];
             updatedCartItems[existingCartItemIndex] = updatedCartItem;
-            setCartItems(updatedCartItems);
+            updateCart(updatedCartItems);
         }
     };
 
@@ -89,9 +102,8 @@ export const CartProvider = ({ children }: Props) => {
             updateCartItemQuantity,
             cartTotal,
             cartCount,
-    }}
->
-    {children}
+    }} >
+        {children}
     </CartContext.Provider>
 );
 };
